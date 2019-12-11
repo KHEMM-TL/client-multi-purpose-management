@@ -1,5 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>À propos</h1>
+    <p>Site développer par KHEMM-TL</p>
   </div>
 </template>
