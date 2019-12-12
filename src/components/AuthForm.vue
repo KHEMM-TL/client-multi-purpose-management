@@ -59,7 +59,6 @@ export default class AuthForm extends Vue {
   }
 
   submit () {
-    console.log('clicked')
     this.close()
     // employee.auth(this.login, this.password)
     //   .then(token => {
