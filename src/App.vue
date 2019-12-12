@@ -7,7 +7,7 @@
       clipped
     >
       <v-list dense>
-        <v-list-item @click="clickAuth">
+        <v-list-item v-show="!isConnected" @click="clickAuth">
           <v-list-item-action>
             <v-icon>{{ mdiAccount }}</v-icon>
           </v-list-item-action>
@@ -78,6 +78,11 @@ export default {
     },
     toggleDark () {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    }
+  },
+  computed: {
+    isConnected () {
+      return this.$store.state.token
     }
   },
   data: () => ({

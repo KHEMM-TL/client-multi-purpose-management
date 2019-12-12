@@ -93,8 +93,14 @@ export default Vue.extend({
       }
       const start = this.serializeTime(this.start)
       const end = this.serializeTime(this.end)
-      const name = this.name[0].toUpperCase() + this.name.substr(1).toLowerCase()
-      this.$emit('submit', { start, end, owner: this.association || `${this.lastname.toUpperCase()} ${name}` })
+      let owner: string
+      if (this.association) {
+        owner = this.association
+      } else {
+        const name = this.name[0].toUpperCase() + this.name.substr(1).toLowerCase()
+        owner = `${this.lastname.toUpperCase()} ${name}`
+      }
+      this.$emit('submit', { start, end, owner })
       this.close()
     }
   }

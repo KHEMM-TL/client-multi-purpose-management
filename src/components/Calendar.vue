@@ -30,7 +30,7 @@
         :events="events"
         color="primary"
         event-color="color"
-        event-height="40px"
+        :event-height="40"
         :type="type"
         :short-weekdays="false"
         @click:time="clickTime"
@@ -44,6 +44,7 @@
 <script lang="ts">
 import { Prop, Vue, Component } from 'vue-property-decorator'
 import { DateTime } from 'luxon'
+import { store } from '@/store'
 import { ITimeEvent, VCalendar } from '@/components'
 import { mdiChevronLeft, mdiChevronRight, mdiCalendarToday } from '@mdi/js'
 import BookForm from './BookForm.vue'
@@ -81,6 +82,11 @@ export default Vue.extend({
   mounted () {
     this.$refs.calendar.scrollToTime({ hour: 8, minute: 0 })
   },
+  computed: {
+    readyonly (): boolean {
+      return !store.state.token
+    }
+  },
   watch: {
     dt (newValue: DateTime, oldValue: DateTime) {
       this.value = newValue.toSQLDate()
@@ -88,6 +94,9 @@ export default Vue.extend({
   },
   methods: {
     clickTime (event: ITimeEvent) {
+      if (this.readyonly) {
+        return
+      }
       const { day, month, year, hour, minute } = event
       this.$refs.form.open(DateTime.fromObject({ day, month, year, hour, minute }))
     },
@@ -115,7 +124,7 @@ export default Vue.extend({
       this.dt = this.now
     },
     addEventFromForm (ev: { start: DateTime; end: DateTime; owner: string }) {
-      console.log()
+      console.log(ev)
       this.events.push({
         start: ev.start.toFormat('y-MM-dd T'),
         end: ev.start.toFormat('y-MM-dd T'),

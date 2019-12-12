@@ -9,10 +9,10 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Identifiant" required></v-text-field>
+                <v-text-field v-model="login" label="Identifiant" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Mot de passe" type="password" required></v-text-field>
+                <v-text-field v-model="password" label="Mot de passe" type="password" required></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -61,10 +61,10 @@ export default class AuthForm extends Vue {
 
   submit () {
     this.close()
-    // employee.auth(this.login, this.password)
-    //   .then(token => {
-    //     store.commit('setToken', token)
-    //   })
+    employee.auth(this.login, this.password)
+      .then(token => {
+        store.commit('setToken', token)
+      })
   }
 }
 </script>
