@@ -17,4 +17,6 @@ export interface ITimeEvent {
 
 export interface VCalendar extends Element {
   scrollToTime(time: number | string | { hour: number, minute: number }): boolean;
+  value: string;
+  now: string;
 }

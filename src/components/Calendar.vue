@@ -1,21 +1,26 @@
 <template>
   <v-sheet>
-    <v-card class="d-flex flex-row-reverse" flat tile>
+    <v-card class="d-flex justify-space-between mb-6" flat tile>
       <div class="pa-2">
+        <v-btn large @click="minus">
+          <v-icon>{{ mdiChevronLeft }}</v-icon>
+        </v-btn>
+      </div>
+      <div class="pa-2" @click="today">
         <v-btn large>
-          <v-icon>{{ mdiChevronRight }}</v-icon>
+          <v-icon>{{ mdiCalendarToday }}</v-icon>
         </v-btn>
       </div>
       <div class="pa-2">
-        <v-btn @click="minus" large>
-          <v-icon>{{ mdiChevronLeft }}</v-icon>
+        <v-btn large @click="plus">
+          <v-icon>{{ mdiChevronRight }}</v-icon>
         </v-btn>
       </div>
     </v-card>
     <v-calendar
       ref="calendar"
-      :now="now"
-      :value="now"
+      :now="now.toSQLDate()"
+      :value="value"
       :events="events"
       color="primary"
       type="week"
@@ -30,43 +35,44 @@
 import { Prop, Vue, Component } from 'vue-property-decorator'
 import { DateTime } from 'luxon'
 import { ITimeEvent, VCalendar } from '@/components'
-import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
+import { mdiChevronLeft, mdiChevronRight, mdiCalendarToday } from '@mdi/js'
 
-@Component
-export default class Calendar extends Vue {
-  private dt!: DateTime;
+export default Vue.extend({
 
   data () {
     const dt = DateTime.local()
     return {
-      now: this.dt.toSQLDate(),
+      mdiChevronLeft,
+      mdiChevronRight,
+      mdiCalendarToday,
       dt,
+      now: dt,
+      value: dt.toSQLDate(),
       events: []
     }
-  }
-  get mdiChevronLeft (): string {
-    return mdiChevronLeft
-  }
-  get mdiChevronRight (): string {
-    return mdiChevronRight
-  }
-  get start (): string {
-    return this.dt.set({ weekday: 1 }).toSQLDate()
-  }
-  get end (): string {
-    return this.dt.set({ weekday: 7 }).toSQLDate()
-  }
-  get value (): string {
-    return this.dt.toSQLDate()
-  }
+  },
   mounted () {
     (this.$refs.calendar as VCalendar).scrollToTime({ hour: 8, minute: 0 })
+  },
+  watch: {
+    dt (newValue: DateTime, oldValue: DateTime) {
+      this.value = newValue.toSQLDate()
+    }
+  },
+  methods: {
+    clickTime (day: ITimeEvent) {
+      this.$emit('click:time', day)
+    },
+    minus () {
+      this.dt = this.dt.minus({ week: 1 })
+    },
+    plus () {
+      this.dt = this.dt.plus({ week: 1 })
+    },
+    today () {
+      this.dt = this.now
+    }
   }
-  clickTime (day: ITimeEvent) {
-    this.$emit('click:time', day)
-  }
-  minus () {
-    this.dt.minus({ week: 1 })
-  }
-}
+
+})
 </script>
