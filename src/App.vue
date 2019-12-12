@@ -23,6 +23,7 @@
             <v-list-item-title>Commuter thème</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <pdf-button />
       </v-list>
     </v-navigation-drawer>
 
@@ -62,12 +63,14 @@
 import { mdiAccount, mdiThemeLightDark } from '@mdi/js'
 import Calendar from './components/Calendar.vue'
 import AuthForm, { IAuthForm } from './components/AuthForm.vue'
+import PdfButton from './components/PdfButton.vue'
 
 export default {
   name: 'App',
   components: {
     AuthForm,
-    Calendar
+    Calendar,
+    PdfButton
   },
   methods: {
     clickAuth (ev: any) {
