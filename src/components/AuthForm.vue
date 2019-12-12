@@ -34,6 +34,7 @@ import { store } from '@/store'
 
 export interface IAuthForm extends Vue {
   open(): void;
+  close(): void;
 }
 
 @Component
