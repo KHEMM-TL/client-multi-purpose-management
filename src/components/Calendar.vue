@@ -78,7 +78,6 @@ export default Vue.extend({
       this.dt = this.now
     },
     addEventFromForm (ev: { start: DateTime; end: DateTime; owner: string }) {
-      console.log()
       this.events.push({
         start: ev.start.toFormat('y-MM-dd HH-mm'),
         end: ev.start.toFormat('y-MM-dd HH-mm'),
