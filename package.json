@@ -9,7 +9,7 @@
     "watch": "vue-cli-service build --mode development --modern --watch"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "core-js": "^3.4.3",
     "jsonwebtoken": "^8.5.1",
     "jspdf": "^1.5.3",
